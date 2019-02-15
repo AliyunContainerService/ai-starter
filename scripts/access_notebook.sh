@@ -4,7 +4,7 @@ ACCESS_TYPE="PORT_FORWARD"
 LABEL="app=arena-notebook"
 DEPLOYMENT_NAME="arena-notebook"
 
-function access() {
+function access_notebook() {
 	if [[ "$ACCESS_TYPE" == "SERVICE" ]];then
 		expose_service
 	else
@@ -24,18 +24,20 @@ function port_forward() {
 function expose_service() {
 	local NAMESPACE=${NAMESPACE:-default}
 	local SERVICE_TYPE=${SERVICE_TYPE:-LoadBalancer}
-	local SERVICE_TYPE_LOW=$(echo $SERVICE_TYPE | tr '[A-Z]' '[a-z]')
-	local SERVICE_NAME=arena-notebook-$SERVICE_TYPE_LOW
+	local SERVICE_NAME="arena-notebook"
 	local SERVICE_URL=$(get_service_url $SERVICE_NAME)
 	if [[ "$SERVICE_URL" != "" ]]; then
-		echo "Service $SERVICE_NAME is exist, You can access notebook by open http://$SERVICE_URL in bowser"
+		echo "Service $SERVICE_NAME is exist."
 		echo "If you want to delete the service, please exec \"kubectl delete svc -n $NAMESPACE $SERVICE_NAME\" "
+		echo "If you want to get service detail, please exec \"kubectl get svc -n $NAMESPACE $SERVICE_NAME\" "
+		echo "You can access notebook by open http://$SERVICE_URL in bowser"
 		exit 0
 	fi
 
 	kubectl expose deployment $DEPLOYMENT_NAME -n $NAMESPACE --type=$SERVICE_TYPE --name=$SERVICE_NAME
-	echo "Expose arena notebook by $SERVICE_TYPE type service, you can exec \"kubectl get svc -n $NAMESPACE $SERVICE_NAME\" to check the service."
+	echo "Expose notebook by $SERVICE_TYPE type service"
 	echo "If you want to delete the service, please exec \"kubectl delete svc -n $NAMESPACE $SERVICE_NAME\" "
+	echo "If you want to get service detail, please exec \"kubectl get svc -n $NAMESPACE $SERVICE_NAME\" "
 	if [[ "$SERVICE_TYPE" == "LoadBalancer" ]]; then
 		echo "Wait for loadbalancer ready..."
 	fi
@@ -61,7 +63,7 @@ function get_service_url() {
 		SERVICE_PORT=$(kubectl get svc -n $NAMESPACE $SERVICE_NAME -ojsonpath='{.spec.ports[0].port}')
 		SERVICE_IP=""
 		if [[ "$SERVICE_TYPE" == "NodePort" ]];then
-			SERVICE_IP="<Node-IP>"
+			SERVICE_IP=$(kubectl get no -ojsonpath='{.items[0].status.addresses[0].address}')
 		elif [[ "$SERVICE_TYPE" == "LoadBalancer" ]]; then
 			SERVICE_IP=$(kubectl get svc -n $NAMESPACE $SERVICE_NAME -ojsonpath='{.status.loadBalancer.ingress[0].ip}')
 		else
@@ -110,7 +112,7 @@ function main() {
 	    esac
         shift
 	done
-	access
+	access_notebook
 }
 
 main "$@"

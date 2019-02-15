@@ -55,7 +55,11 @@ function main() {
 	        -h|--host-network)
 	            HOST_NETWORK="true"
 	            ;;
-	        -n|--namespace)
+          -n|--namespace)
+              NAMESPACE=$2
+              shift
+              ;;
+	        -b|--notebook)
 	            NAMESPACE=$2
 	            shift
 	            ;;
