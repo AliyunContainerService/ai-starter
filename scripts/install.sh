@@ -1,4 +1,4 @@
-function install() {
+function install_arena() {
 	HOST_NETWORK=${HOST_NETWORK:-"false"}
 	PROMETHEUS=${PROMETHEUS:-"false"}
 	NAMESPACE=${NAMESPACE:-"default"}
@@ -44,7 +44,173 @@ spec:
 EOF
 }
 
+function install_notebook() {
+  NAMESPACE=${NAMESPACE:-"default"}
+  NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD:-"mypassw0rd"}
+  PVC_NAME=${PVC_NAME:-"training-data"}
+  PVC_MOUNT_PATH=${PVC_MOUNT_PATH:-"/root/training-data"}
+  SREVICE_TYPE=${SREVICE_TYPE:-"ClusterIP"}
+  NOTEBOOK_IMAGE=${NOTEBOOK_IMAGE:-"cheyang/arena-notebook:cpu"}
 
+  cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: arena-notebook
+  namespace: $NAMESPACE
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: arena-notebook
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - deployments
+  - nodes
+  - nodes/*
+  verbs:
+  - get
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: arena-notebook
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - services/proxy
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  - services
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  - apps
+  - extensions
+  resources:
+  - deployments
+  - replicasets
+  verbs:
+  - '*'
+- apiGroups:
+  - kubeflow.org
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - '*'
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: arena-notebook-cluster-role
+  namespace: $NAMESPACE
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: arena-notebook
+subjects:
+- kind: ServiceAccount
+  name: arena-notebook
+  namespace: $NAMESPACE
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: arena-notebook-role
+  namespace: $NAMESPACE
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: arena-notebook
+subjects:
+- kind: ServiceAccount
+  name: arena-notebook
+  namespace: $NAMESPACE
+---
+# Define the arena notebook deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arena-notebook
+  namespace: $NAMESPACE
+  labels:
+    app: arena-notebook
+spec:
+  replicas: 1
+  selector: # define how the deployment finds the pods it mangages
+    matchLabels:
+      app: arena-notebook
+  template: # define the pods specifications
+    metadata:
+      labels:
+        app: arena-notebook
+    spec:
+      serviceAccountName: arena-notebook
+      containers:
+      - name: arena-notebook
+        image: $NOTEBOOK_IMAGE
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+          hostPort: 8888
+        env:
+          - name: PASSWORD
+            value: $NOTEBOOK_PASSWORD
+        volumeMounts:
+          - mountPath: "$PVC_MOUNT_PATH"
+            name: training-data
+      volumes:
+        - name: training-data
+          persistentVolumeClaim:
+            claimName: $PVC_NAME
+EOF
+
+# Define the arena notebook service
+  cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Service
+metadata:
+  name: arena-notebook
+  namespace: $NAMESPACE
+spec:
+  ports:
+  - port: 80
+    targetPort: 8888
+    name: notebook
+  selector:
+    app: tf-notebook
+  type: $SREVICE_TYPE
+EOF
+}
+
+function install() {
+  install_arena
+  install_notebook
+}
 
 function main() {
 	while [ $# -gt 0 ];do
@@ -60,7 +226,7 @@ function main() {
               shift
               ;;
 	        -b|--notebook)
-	            NAMESPACE=$2
+	            INSTALL_NOTEBOOK=$2
 	            shift
 	            ;;
 	        *)
