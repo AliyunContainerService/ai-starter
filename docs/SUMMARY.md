@@ -9,7 +9,6 @@
 * [使用介绍](guide/README.md)\
 	* [如何访问notebook](guide/ACCESS_NOTEBOOK.md)\
 	* [notebook中使用arena](guide/NOTEBOOK_USE_ARENA.md)\
-
 * [模型实践](practice/README.md)\
 	* [Resnet模型](practice/RESNET.md)\
 	* [Bert模型](practice/BERT.md)\
