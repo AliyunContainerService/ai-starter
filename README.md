@@ -5,6 +5,6 @@
 
 ```
 git clone git@gitlab.alibaba-inc.com:eml/bootstrap.git
-cd bootstrap/gitbook/
+cd bootstrap/docs/
 gitbook serve
 ```
