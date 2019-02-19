@@ -155,6 +155,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.2.4" data-path="SETUP_LOCAL.html">
+            
+                <a href="SETUP_LOCAL.html">
+            
+                    
+                    配置本地环境
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -210,7 +223,7 @@
                 <span>
             
                     
-                    使用介绍
+                    模型实践
             
                 </a>
             
@@ -295,7 +308,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="&#x521B;&#x5EFA;&#x96C6;&#x7FA4;">&#x521B;&#x5EFA;&#x96C6;&#x7FA4;</h3>
+                                <h3 id="kubernetes-gpu&#x73AF;&#x5883;">Kubernetes GPU&#x73AF;&#x5883;</h3>
+<p>&#x5BB9;&#x5668;&#x670D;&#x52A1;Kubernetes &#x96C6;&#x7FA4;&#x652F;&#x6301;&#x7BA1;&#x7406;GPU&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x4E14;&#x652F;&#x6301;GPU&#x8C03;&#x5EA6;&#x3002;&#x7BA1;&#x7406;GPU&#x901A;&#x8FC7;&#x4E24;&#x4E2A;&#x7EF4;&#x5EA6;&#xFF1A;</p>
+<ul>
+<li>&#x5728;GPU&#x8282;&#x70B9;&#x4E0A;&#x5B89;&#x88C5;nvidia-docker&#xFF0C;&#x5B83;&#x548C;&#x666E;&#x901A;&#x7684;docker runtime&#x4E0D;&#x540C;&#xFF0C;&#x901A;&#x8FC7;nvidia-docker&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x5BB9;&#x5668;&#x4E2D;&#x901A;&#x8FC7;&#x76EE;&#x5F55;&#x6302;&#x8F7D;&#x7684;&#x65B9;&#x5F0F;&#x8BBF;&#x95EE;ECS&#x7684;Nvidia Driver&#xFF0C;&#x5E76;&#x4E14;&#x53EF;&#x4EE5;&#x5728;&#x5BB9;&#x5668;&#x4E2D;&#x6302;&#x8F7D;&#x6307;&#x5B9A;&#x7684;GPU&#x8BBE;&#x5907;&#x3002;</li>
+<li>&#x5728;GPU&#x8282;&#x70B9;&#x4E0A;&#x90E8;&#x7F72;GPU DevicePlugin&#xFF0C;&#x5B83;&#x8D1F;&#x8D23;&#x4E0A;&#x62A5;&#x8282;&#x70B9;&#x4E0A;&#x7684;GPU&#x4FE1;&#x606F;&#x3002; &#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5728;Kubernetes&#x7684;Pod&#x7F16;&#x6392;&#x4E2D;&#x58F0;&#x660E;request&#xFF1A; <code>nvidia.com/gpu</code>   &#x7684;&#x65B9;&#x5F0F;&#x6307;&#x5B9A;&#x5BB9;&#x5668;&#x662F;&#x5426;&#x9700;&#x8981;&#x6302;&#x8F7D;GPU&#x4EE5;&#x53CA;&#x4E2A;&#x6570;&#x3002;&#x5BB9;&#x5668;&#x5728;&#x8C03;&#x5EA6;&#x8282;&#x70B9;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x88AB;&#x8C03;&#x5EA6;&#x5230;&#x6EE1;&#x8DB3;&#x6761;&#x4EF6;&#x7684;GPU&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x6839;&#x636E;&#x6570;&#x91CF;&#x6620;&#x5C04;GPU&#x5230;&#x5BB9;&#x5668;&#x4E2D;&#x3002;</li>
+</ul>
+<p>&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x5E26;GPU&#x7684;Kubernetes&#x96C6;&#x7FA4;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6587;&#x6863; <a href="https://help.aliyun.com/document_detail/86490.html?spm=a2c4g.11186623.6.582.4fe64330JXBSuT" target="_blank">https://help.aliyun.com/document_detail/86490.html</a> &#x3002;</p>
+<h3 id="&#x521B;&#x5EFA;&#x96C6;&#x7FA4;&#x6B65;&#x9AA4;">&#x521B;&#x5EFA;&#x96C6;&#x7FA4;&#x6B65;&#x9AA4;</h3>
+<p>1. &#x8FDB;&#x5165;&#x5BB9;&#x5668;&#x670D;&#x52A1;&#x63A7;&#x5236;&#x53F0;&#xFF08;<a href="https://cs.console.aliyun.com/#/k8s/cluster/list" target="_blank">https://cs.console.aliyun.com</a> &#xFF09;&#xFF0C;&#x9009;&#x62E9;&#x521B;&#x5EFA;&#x96C6;&#x7FA4;<br><img src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550496025425-3632e723-3420-46b7-8619-6198dee8bca1.png#align=left&amp;display=inline&amp;height=87&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=270&amp;originWidth=1830&amp;size=159340&amp;width=587" alt="image.png"></p>
+<p>2. Worker&#x5B9E;&#x4F8B;&#x89C4;&#x683C;&#x9009;&#x62E9;GN5&#x7CFB;&#x5217;&#x3002;&#x5177;&#x4F53;&#x914D;&#x7F6E;&#x53EF;&#x4EE5;&#x67E5;&#x770B;  <a href="https://help.aliyun.com/document_detail/25378.html#gn5" target="_blank">ECS &#x5B9E;&#x4F8B;&#x89C4;&#x683C;&#x65CF;</a><br><img src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550495886545-88e34b07-01f4-43e4-a2ee-c8a1a3ddaff2.png#align=left&amp;display=inline&amp;height=196&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=196&amp;originWidth=821&amp;size=50692&amp;width=821" alt="image.png"></p>
+<p>3. &#x5176;&#x4ED6;&#x914D;&#x7F6E;&#x53EF;&#x4EE5;&#x6309;&#x9700;&#x8BBE;&#x7F6E;&#x3002;&#x5982;&#x679C;&#x60F3;&#x8981;&#x4E86;&#x89E3;&#x66F4;&#x8BE6;&#x7EC6;&#x7684;Kubernetes&#x96C6;&#x7FA4;&#x914D;&#x7F6E;&#xFF0C; &#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;<a href="https://help.aliyun.com/document_detail/86488.html" target="_blank">https://help.aliyun.com/document_detail/86488.html</a></p>
+<p>4. &#x5B8C;&#x6210;&#x914D;&#x7F6E;&#x540E;&#xFF0C;&#x70B9;&#x51FB;&#x7B49;&#x5F85;&#x5927;&#x6982;20&#x5206;&#x949F;&#x540E;&#xFF0C;&#x96C6;&#x7FA4;&#x521B;&#x5EFA;&#x5B8C;&#x6BD5;&#x3002;<br><img src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550126494113-a90d451f-ccb8-4174-88f8-a6f5e4f7881f.png#align=left&amp;display=inline&amp;height=270&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=540&amp;originWidth=1612&amp;size=170433&amp;width=806" alt="image.png"></p>
+<p>5. &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x96C6;&#x7FA4;&#x8282;&#x70B9;&#x5217;&#x8868;&#x67E5;&#x770B;&#x8282;&#x70B9;&#xFF0C;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x5230;&#x5305;&#x542B;GN5&#x5B9E;&#x4F8B;&#x89C4;&#x683C;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x8FD9;&#x4E9B;&#x8282;&#x70B9;&#x4F1A;&#x88AB;&#x7528;&#x4E8E;&#x88AB;&#x8C03;&#x5EA6;&#x548C;&#x90E8;&#x7F72;GPU&#x5E94;&#x7528;&#x3002;<br><img src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550547305225-fadf5789-a5c6-4593-9396-8fab6f151425.png#align=left&amp;display=inline&amp;height=157&amp;linkTarget=_blank&amp;name=image.png&amp;originHeight=251&amp;originWidth=616&amp;size=68713&amp;width=385" alt="image.png"></p>
 
                                 
                                 </section>
@@ -339,7 +364,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"创建集群","level":"1.2.1","depth":2,"next":{"title":"配置NAS作为共享存储","level":"1.2.2","depth":2,"path":"setup/SETUP_NAS.md","ref":"setup/SETUP_NAS.md","articles":[]},"previous":{"title":"环境准备","level":"1.2","depth":1,"path":"setup/README.md","ref":"setup/README.md","articles":[{"title":"创建集群","level":"1.2.1","depth":2,"path":"setup/CREATE_CLUSTER.md","ref":"setup/CREATE_CLUSTER.md","articles":[]},{"title":"配置NAS作为共享存储","level":"1.2.2","depth":2,"path":"setup/SETUP_NAS.md","ref":"setup/SETUP_NAS.md","articles":[]},{"title":"安装Arena","level":"1.2.3","depth":2,"path":"setup/INSTALL_ARENA.md","ref":"setup/INSTALL_ARENA.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"setup/CREATE_CLUSTER.md","mtime":"2019-02-18T11:45:56.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-18T11:44:39.737Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"创建集群","level":"1.2.1","depth":2,"next":{"title":"配置NAS作为共享存储","level":"1.2.2","depth":2,"path":"setup/SETUP_NAS.md","ref":"setup/SETUP_NAS.md","articles":[]},"previous":{"title":"环境准备","level":"1.2","depth":1,"path":"setup/README.md","ref":"setup/README.md","articles":[{"title":"创建集群","level":"1.2.1","depth":2,"path":"setup/CREATE_CLUSTER.md","ref":"setup/CREATE_CLUSTER.md","articles":[]},{"title":"配置NAS作为共享存储","level":"1.2.2","depth":2,"path":"setup/SETUP_NAS.md","ref":"setup/SETUP_NAS.md","articles":[]},{"title":"安装Arena","level":"1.2.3","depth":2,"path":"setup/INSTALL_ARENA.md","ref":"setup/INSTALL_ARENA.md","articles":[]},{"title":"配置本地环境","level":"1.2.4","depth":2,"path":"setup/SETUP_LOCAL.md","ref":"setup/SETUP_LOCAL.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"setup/CREATE_CLUSTER.md","mtime":"2019-02-19T03:35:59.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-19T07:27:40.917Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

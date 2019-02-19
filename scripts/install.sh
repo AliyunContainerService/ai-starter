@@ -176,7 +176,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8888
-          hostPort: 8888
         env:
           - name: PASSWORD
             value: $NOTEBOOK_PASSWORD
