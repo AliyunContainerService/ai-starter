@@ -16,7 +16,7 @@
 在控制台集群详情中获取Kubeconfig。
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550559838022-51236fc3-27dc-40fc-91e8-5b5af951f363.png#align=left&display=inline&height=157&linkTarget=_blank&name=image.png&originHeight=513&originWidth=1426&size=334486&width=438)
 
-### 安装arena
+### 安装Arena
 运行安装命令：
 ```
 curl -s http://xiaoyuan-dev.oss-cn-beijing.aliyuncs.com/install.sh | bash -s --
