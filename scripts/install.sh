@@ -36,6 +36,10 @@ spec:
         volumeMounts:
         - mountPath: /root/.kube/config
           name: kube-config
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
       volumes:
         - name: kube-config
           hostPath:
@@ -153,21 +157,21 @@ subjects:
 ---
 # Define the arena notebook deployment
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: arena-notebook
   namespace: $NAMESPACE
   labels:
     app: arena-notebook
 spec:
-  replicas: 1
   selector: # define how the deployment finds the pods it mangages
     matchLabels:
-      app: arena-notebook
+      app: arena-notebook-$$USER_NAME
+  serviceName: "arena-notebook-$$USER_NAME"
   template: # define the pods specifications
     metadata:
       labels:
-        app: arena-notebook
+        app: arena-notebook-$$USER_NAME
     spec:
       serviceAccountName: arena-notebook
       containers:
@@ -181,9 +185,9 @@ spec:
             value: $NOTEBOOK_PASSWORD
         volumeMounts:
           - mountPath: "$PVC_MOUNT_PATH"
-            name: training-data
+            name: workspace
       volumes:
-        - name: training-data
+        - name: workspace
           persistentVolumeClaim:
             claimName: $PVC_NAME
 EOF
@@ -193,7 +197,7 @@ EOF
 apiVersion: v1
 kind: Service
 metadata:
-  name: arena-notebook
+  name: arena-notebook-$$USER_NAME
   namespace: $NAMESPACE
 spec:
   ports:
@@ -224,8 +228,12 @@ function main() {
               NAMESPACE=$2
               shift
               ;;
-	        -b|--notebook)
-	            INSTALL_NOTEBOOK=$2
+          -b|--notebook)
+              INSTALL_NOTEBOOK=$2
+              shift
+              ;;
+	        -u|--user)
+	            USER_NAME=$2
 	            shift
 	            ;;
 	        *)
