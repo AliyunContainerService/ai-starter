@@ -52,9 +52,9 @@ function install_notebook() {
   NAMESPACE=${NAMESPACE:-"default"}
   NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD:-"mypassw0rd"}
   PVC_NAME=${PVC_NAME:-"training-data"}
-  PVC_MOUNT_PATH=${PVC_MOUNT_PATH:-"/root/training-data"}
+  PVC_MOUNT_PATH=${PVC_MOUNT_PATH:-"/root"}
   SREVICE_TYPE=${SREVICE_TYPE:-"ClusterIP"}
-  NOTEBOOK_IMAGE=${NOTEBOOK_IMAGE:-"cheyang/arena-notebook:cpu"}
+  NOTEBOOK_IMAGE=${NOTEBOOK_IMAGE:-"registry.cn-beijing.aliyuncs.com/acs/arena-notebook:cpu"}
 
   cat <<EOF | kubectl apply -f -
 apiVersion: v1
@@ -166,12 +166,12 @@ metadata:
 spec:
   selector: # define how the deployment finds the pods it mangages
     matchLabels:
-      app: arena-notebook-$$USER_NAME
-  serviceName: "arena-notebook-$$USER_NAME"
-  template: # define the pods specifications
+      app: arena-notebook
+  serviceName: "arena-notebook"
+  template:
     metadata:
       labels:
-        app: arena-notebook-$$USER_NAME
+        app: arena-notebook
     spec:
       serviceAccountName: arena-notebook
       containers:
@@ -197,7 +197,7 @@ EOF
 apiVersion: v1
 kind: Service
 metadata:
-  name: arena-notebook-$$USER_NAME
+  name: arena-notebook
   namespace: $NAMESPACE
 spec:
   ports:
@@ -211,7 +211,7 @@ EOF
 }
 
 function install() {
-  install_arena
+  # install_arena
   install_notebook
 }
 

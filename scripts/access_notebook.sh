@@ -15,7 +15,8 @@ function access_notebook() {
 function port_forward() {
 	local NAMESPACE=${NAMESPACE:-default}
 	local PORT=${PORT:-8081}
-	local PODNAME=`kubectl get po -n $NAMESPACE -l $LABEL | grep -v NAME| head -1| awk '{print $1}'`
+	local PODNAME=${PODNAME:-"arena-notebook-0"}
+	# local PODNAME=`kubectl get po -n $NAMESPACE -l $LABEL | grep -v NAME| head -1| awk '{print $1}'`
 	echo "Forwarding pod: $NAMESPACE/$PODNAME, port: $PORT"
 	echo "Open http://localhost:$PORT in browser"
 	kubectl port-forward ${PODNAME} -n ${NAMESPACE} $PORT:8888

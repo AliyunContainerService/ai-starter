@@ -4,7 +4,7 @@
 ### 运行GitBook
 
 ```
-git clone git@gitlab.alibaba-inc.com:eml/bootstrap.git
+git clone git@github.com:AliyunContainerService/ai-starter.git
 cd bootstrap/docs/
 gitbook serve
 ```
