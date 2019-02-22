@@ -8,7 +8,7 @@
 	* [配置本地环境](setup/SETUP_LOCAL.md)\
 * [使用介绍](guide/README.md)\
 	* [如何访问notebook](guide/ACCESS_NOTEBOOK.md)\
-	* [notebook中使用Arena](guide/NOTEBOOK_USE_ARENA.md)\
+	* [如何使用notebook](guide/USE_NOTEBOOK.md)\
 * [模型实践](practice/README.md)\
 	* [Resnet模型](practice/RESNET.md)\
 	* [Bert模型](practice/BERT.md)\

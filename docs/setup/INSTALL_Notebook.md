@@ -1,6 +1,6 @@
-## 安装Arena和Notebook
+## 安装Notebook
 为了简化安装，我们提供了安装脚本。 由于安装脚本需要和集群交互，我们需要在安装kubectl并配置好kubeconfig的环境中运行安装命令。 <br />
-我们可以选择通过CloudShell 执行命令， 也可以登录到Master上执行命令。
+您可以选择通过CloudShell 执行命令， 也可以登录到Master上执行命令。
 
 ##### 登录到master
 我们可以选择登录到master机器上运行安装命令， 在控制台上查看Master节点SSH登录地址：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550497957036-403a6b99-f28b-42a9-a91c-14edf7844ebb.png#align=left&display=inline&height=168&linkTarget=_blank&name=image.png&originHeight=415&originWidth=1107&size=92074&width=448)
@@ -19,7 +19,7 @@
 ### 安装Arena
 运行安装命令：
 ```
-curl -s http://xiaoyuan-dev.oss-cn-beijing.aliyuncs.com/install.sh | bash -s --
+curl -s //kubeflow.oss-cn-beijing.aliyuncs.com/bootstrap/install.sh | bash -s --
 ```
 
 安装完成后，检查安装结果：
