@@ -20,4 +20,4 @@
 
 2\. 在容器控制台中选择 集群 -> 存储卷 -> 创建<br />![image.png](images/nas_create_pv.png)
 
-3\. 创建存储卷完成，继续创建存储声明（PVC），名称我们约定设置为 `training-data`  <br />![image.png](images/nas_create_pvc.png)
+3\. 创建存储卷完成，继续创建存储声明（PVC），名称我们约定设置为 `training-data`， 并且需要选择之前的存储卷。 <br />![image.png](images/nas_create_pvc.png)
