@@ -39,7 +39,6 @@ spec:
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
-        operator: Exists
       volumes:
         - name: kube-config
           hostPath:
@@ -211,7 +210,7 @@ EOF
 }
 
 function install() {
-  # install_arena
+  install_arena
   install_notebook
 }
 
