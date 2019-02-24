@@ -20,4 +20,4 @@
 
 2\. 在容器控制台中选择 集群 -> 存储卷 -> 创建<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550142718374-a757491e-dc93-46cf-9240-8d187e2b971e.png#align=left&display=inline&height=266&linkTarget=_blank&name=image.png&originHeight=699&originWidth=1205&size=94725&width=459)
 
-3\. 创建存储卷完成，继续创建存储声明（PVC），名称我们约定设置为 `training-data`  <br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550142707275-64fdb0c6-19f9-4223-ad03-811282e8e500.png#align=left&display=inline&height=273&linkTarget=_blank&name=image.png&originHeight=699&originWidth=1205&size=94725&width=471)
+3\. 创建存储卷完成，继续创建存储声明（PVC），名称我们约定设置为 `training-data`， 并且需要选择之前的存储卷。 <br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/25353/1550142707275-64fdb0c6-19f9-4223-ad03-811282e8e500.png#align=left&display=inline&height=273&linkTarget=_blank&name=image.png&originHeight=699&originWidth=1205&size=94725&width=471)

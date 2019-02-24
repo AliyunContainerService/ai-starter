@@ -1,56 +1,38 @@
 function install_arena() {
 	HOST_NETWORK=${HOST_NETWORK:-"false"}
 	PROMETHEUS=${PROMETHEUS:-"false"}
-	NAMESPACE=${NAMESPACE:-"default"}
 
 	cat <<EOF | kubectl apply -f -
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: arena-installer
-  namespace: $NAMESPACE
-  labels:
-    app: arena-installer
+  namespace: kube-system
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: arena-installer
-  template:
-    metadata:
-      labels:
-        app: arena-installer
-    spec:
-      containers:
-      - name: arena
-        image: cheyang/arena:0.2.0
-        env:
-        - name: useHostNetwork
-          value: "$HOST_NETWORK"
-        - name: usePrometheus
-          value: "$PROMETHEUS"
-        - name: platform
-          value: ack
-        - name: KUBECONFIG
-          value: /root/.kube/config
-        volumeMounts:
-        - mountPath: /root/.kube/config
-          name: kube-config
-      tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/master
-        operator: Exists
-      volumes:
-        - name: kube-config
-          hostPath:
-            path: /root/.kube/config
-            type: File
+  restartPolicy: Never
+  hostNetwork: true
+  serviceAccountName: admin
+  hostNetwork: true
+  containers:
+  - name: arena
+    image: cheyang/arena:0.2.0
+    env:
+    - name: useHostNetwork
+      value: "$HOST_NETWORK"
+    - name: usePrometheus
+      value: "$PROMETHEUS"
+    - name: platform
+      value: ack
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
 EOF
 }
 
 function install_notebook() {
   NAMESPACE=${NAMESPACE:-"default"}
-  NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD:-"mypassw0rd"}
+  NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD:-`openssl rand -base64 8`}
   PVC_NAME=${PVC_NAME:-"training-data"}
   PVC_MOUNT_PATH=${PVC_MOUNT_PATH:-"/root"}
   SREVICE_TYPE=${SREVICE_TYPE:-"ClusterIP"}
@@ -205,7 +187,7 @@ spec:
     targetPort: 8888
     name: notebook
   selector:
-    app: tf-notebook
+    app: arena-notebook
   type: $SREVICE_TYPE
 EOF
 }
