@@ -10,7 +10,6 @@ metadata:
   namespace: kube-system
 spec:
   restartPolicy: Never
-  hostNetwork: true
   serviceAccountName: admin
   hostNetwork: true
   containers:
@@ -23,10 +22,6 @@ spec:
       value: "$PROMETHEUS"
     - name: platform
       value: ack
-  tolerations:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/master
-    operator: Exists
 EOF
 }
 
@@ -193,7 +188,7 @@ EOF
 }
 
 function install() {
-  # install_arena
+  install_arena
   install_notebook
 }
 
