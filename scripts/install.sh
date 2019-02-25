@@ -53,6 +53,7 @@ rules:
   - deployments
   - nodes
   - nodes/*
+  - services/proxy
   verbs:
   - get
   - list
