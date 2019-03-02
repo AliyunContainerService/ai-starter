@@ -9,7 +9,7 @@
 ###### 如果您是MAC/Linux的用户
 执行命令
 ```
-# curl -s http://xiaoyuan-dev.oss-cn-beijing.aliyuncs.com/access_notebook.sh | bash -s --
+# curl -s http://kubeflow.oss-cn-beijing.aliyuncs.com/bootstrap/access_notebook.sh | bash -s --
 Forwarding pod: default/arena-notebook-c4474d566-wxhx2, port: 8081
 Open http://localhost:8081 in browser
 Forwarding from 127.0.0.1:8081 -> 8888
@@ -20,9 +20,7 @@ Forwarding from [::1]:8081 -> 8888
 
 ###### 如果您是Windows用户
 
-```
-# 获取Pod Name
-# kubectl get po -l 'app=arena-notebook'
+```'
 # 设置转发， PODNAME替换为您的PodName
-# kubectl port-forward <PODNAME> 8001:8888
+# kubectl port-forward arena-notebook-0 8001:8888
 ```

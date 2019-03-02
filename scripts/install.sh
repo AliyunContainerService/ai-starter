@@ -1,6 +1,6 @@
 function install_arena() {
-	HOST_NETWORK=${HOST_NETWORK:-"false"}
-	PROMETHEUS=${PROMETHEUS:-"false"}
+	HOST_NETWORK=${HOST_NETWORK:-"true"}
+	PROMETHEUS=${PROMETHEUS:-"true"}
 
 	cat <<EOF | kubectl apply -f -
 apiVersion: v1
@@ -186,6 +186,8 @@ spec:
     app: arena-notebook
   type: $SREVICE_TYPE
 EOF
+
+#TODO: create ingress
 }
 
 function install() {

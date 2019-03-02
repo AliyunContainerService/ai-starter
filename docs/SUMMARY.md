@@ -1,5 +1,3 @@
-# Summary
-
 * [简介](README.md)
 * [环境准备](setup/README.md)
 	* [创建集群](setup/CREATE_CLUSTER.md)
