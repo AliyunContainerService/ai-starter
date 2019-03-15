@@ -19,7 +19,7 @@
 ### 安装Arena
 运行安装命令：
 ```
-curl -s http://kubeflow.oss-cn-beijing.aliyuncs.com/bootstrap/install.sh | bash -s --
+curl -s https://raw.githubusercontent.com/AliyunContainerService/ai-starter/master/scripts/install.sh | bash -s --
 ```
 
 安装完成后，检查安装结果：
@@ -42,7 +42,7 @@ arena-notebook-5bd4d8c5f7-jc7vf   1/1     Running     0          4d
 
 如果您本地是MAC或者LInux电脑，在笔记本上执行：
 ```
-# curl -s http://kubeflow.oss-cn-beijing.aliyuncs.com/bootstrap/access_notebook.sh | bash -s --
+# curl -s https://raw.githubusercontent.com/AliyunContainerService/ai-starter/master/scripts/access_notebook.sh | bash -s --
 Forwarding pod: default/arena-notebook-c4474d566-wxhx2, port: 8081
 Open http://localhost:8081 in browser
 Forwarding from [::1]:8081 -> 8888
