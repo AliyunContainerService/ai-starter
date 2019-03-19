@@ -16,6 +16,9 @@ function port_forward() {
 	local NAMESPACE=${NAMESPACE:-default}
 	local PORT=${PORT:-8081}
 	local PODNAME=${PODNAME:-"arena-notebook-0"}
+    if [[ -n $USER_NAME ]];then
+      PODNAME="$USER_NAME-arena-notebook-0"
+    fi
 	# local PODNAME=`kubectl get po -n $NAMESPACE -l $LABEL | grep -v NAME| head -1| awk '{print $1}'`
 	echo "Forwarding pod: $NAMESPACE/$PODNAME, port: $PORT"
 	echo "Open http://localhost:$PORT in browser"
@@ -103,6 +106,10 @@ function main() {
 	            SERVICE_TYPE=$2
 	            shift
 	            ;;
+            -u|--user)
+              USER_NAME=$2
+              shift
+              ;;
 	        -h|--help)
 	            usage
 	            exit 0

@@ -28,7 +28,7 @@ spec:
 EOF
 }
 
-function install_notebook() 
+function install_notebook() {
 
 kubectl create secret generic $NOTEBOOK_NAME -n $NAMESPACE --from-literal password=$NOTEBOOK_PASSWORD
 
