@@ -26,6 +26,7 @@ rules:
   - nodes
   - nodes/*
   - services/proxy
+  - persistentvolumes
   verbs:
   - get
   - list
@@ -45,6 +46,7 @@ rules:
   - ""
   resources:
   - services/proxy
+  - persistentvolumeclaims
   verbs:
   - get
 - apiGroups:
@@ -219,13 +221,16 @@ function check_args() {
       echo "INGRESS_HOST can't be empty, please add --ingress-secret <secret name> to specify the ingress tls secret"
       exit 1
     fi
-    check_resource_exist secret $INGRESS_SECRET_NAME $NAMESPACE || \
-    echo "Secret \"$INGRESS_SECRET_NAME\" is not exist, please check the secret specify by --ingress-secret" && \
-    exit 1
+    local secret_exist=$(check_resource_exist secret $INGRESS_SECRET_NAME $NAMESPACE)
+    
+    if [[ "$CLEAN" != "true" && "$secret_exist" != "0" ]]; then
+      echo "Secret \"$INGRESS_SECRET_NAME\" is not exist, please check the secret specify by --ingress-secret" && \
+      exit 1
+    fi
   fi
   # if the notebook sts is exist
-  check_resource_exist sts $NOTEBOOK_NAME $NAMESPACE
-  if [[ "$CLEAN" != "true" && "$?" == "0" ]]; then
+  local sts_exist=$(check_resource_exist sts $NOTEBOOK_NAME $NAMESPACE)
+  if [[ "$CLEAN" != "true" && "$sts_exist" == "0" ]]; then
     echo "This  notebook \"$NOTEBOOK_NAME\" is installed, if you want to reinstall notebook, please specify --clean to uninstall"
     echo "If you want to install notebook for another user, please specify --user <user-name> for user, or specify -n <namespace-name> for different namespace"
     exit 0
@@ -237,17 +242,17 @@ function check_resource_exist() {
   resource_name=$2
   namespace=${3:-"default"}
   kubectl get -n $namespace $resource_type $resource_name &> /dev/null
-  return $?
+  echo $?
 }
 
 function delete_resource() {
   resource_type=$1
   resource_name=$2
   namespace=${3:-"default"}
-  
-  check_resource_exist $resource_type $resource_name $namespace && \
+  local exist=$(check_resource_exist $resource_type $resource_name $namespace)
+  if [[ $exist == "0" ]]; then
     kubectl delete -n $namespace $resource_type $resource_name
-  return $?
+  fi
 }
 
 function clean_notebook() {
@@ -285,10 +290,6 @@ function main() {
               ;;
           -p|--password)
               NOTEBOOK_PASSWORD=$2
-              shift
-              ;;
-          -b|--notebook)
-              INSTALL_NOTEBOOK=$2
               shift
               ;;
           --ingress)
