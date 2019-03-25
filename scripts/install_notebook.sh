@@ -1,32 +1,5 @@
-function install_arena() {
-  if [[ ! -n $INSTALL_BASIC ]]; then
-    return
-  fi
-	HOST_NETWORK=${HOST_NETWORK:-"true"}
-	PROMETHEUS=${PROMETHEUS:-"true"}
-
-	cat <<EOF | kubectl apply -f > $LOG_PRINT -
-apiVersion: v1
-kind: Pod
-metadata:
-  name: arena-installer
-  namespace: kube-system
-spec:
-  restartPolicy: Never
-  serviceAccountName: admin
-  hostNetwork: true
-  containers:
-  - name: arena
-    image: cheyang/arena:0.2.0
-    env:
-    - name: useHostNetwork
-      value: "$HOST_NETWORK"
-    - name: usePrometheus
-      value: "$PROMETHEUS"
-    - name: platform
-      value: ack
-EOF
-}
+#!/usr/bin/env bash
+set -e
 
 function install_notebook() {
 
@@ -298,7 +271,6 @@ function install() {
     clean_notebook
     return 
   fi
-  install_arena
   install_notebook
   install_ingress
   echo "Install successful"
@@ -307,18 +279,9 @@ function install() {
 function main() {
 	while [ $# -gt 0 ];do
 	    case $1 in
-	        -p|--prometheus)
-	            PROMETHEUS="true"
-	            ;;
-	        --host-network)
-	            HOST_NETWORK="true"
-	            ;;
           -n|--namespace)
               NAMESPACE=$2
               shift
-              ;;
-          --install-basic)
-              INSTALL_BASIC="true"
               ;;
           -p|--password)
               NOTEBOOK_PASSWORD=$2
