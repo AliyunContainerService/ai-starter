@@ -2,9 +2,6 @@
 set -e
 
 function install_notebook() {
-
-kubectl create secret generic $NOTEBOOK_NAME -n $NAMESPACE --from-literal password=$NOTEBOOK_PASSWORD
-
   cat <<EOF | kubectl apply -f > $LOG_PRINT -
 apiVersion: v1
 kind: ServiceAccount
@@ -115,6 +112,7 @@ metadata:
   namespace: $NAMESPACE
   labels:
     app: $NOTEBOOK_NAME
+    arena-notebook: $NOTEBOOK_NAME
 spec:
   selector: # define how the deployment finds the pods it mangages
     matchLabels:
@@ -132,22 +130,16 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8888
-        env:
-          - name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: $NOTEBOOK_NAME
-                key: password
         volumeMounts:
           - mountPath: "$PVC_MOUNT_PATH"
             name: workspace
+          - mountPath: '/root/ai-starter'
+            name: public-workspace
       volumes:
         - name: workspace
           persistentVolumeClaim:
             claimName: $PVC_NAME
 EOF
-
-echo "Installing the notebook with password: $NOTEBOOK_PASSWORD"
 
 # Define the arena notebook service
   cat <<EOF | kubectl apply -f > $LOG_PRINT -
@@ -195,16 +187,18 @@ EOF
 
 function parse_args() {
   NAMESPACE=${NAMESPACE:-"default"}
-  NOTEBOOK_PASSWORD=${NOTEBOOK_PASSWORD:-`openssl rand -base64 8`}
   PVC_NAME=${PVC_NAME:-"training-data"}
+  PUBLIC_PVC_NAME=${PUBLIC_PVC_NAME:-"public-data"}
   PVC_MOUNT_PATH=${PVC_MOUNT_PATH:-"/root"}
+  PUBLIC_PVC_MOUNT_PATH=${PUBLIC_PVC_MOUNT_PATH:-"/root/public"}
   SREVICE_TYPE=${SREVICE_TYPE:-"ClusterIP"}
   NOTEBOOK_IMAGE=${NOTEBOOK_IMAGE:-"registry.cn-beijing.aliyuncs.com/acs/arena-notebook:cpu"}
   NOTEBOOK_NAME=${NOTEBOOK_NAME:-"arena-notebook"}
-  if [[ -n $USER_NAME ]];then
-    NOTEBOOK_NAME="$USER_NAME-arena-notebook"
+  if [[ -n $NOTEBOOK_WORKSPACE_NAME ]];then
+    NOTEBOOK_NAME="$NOTEBOOK_WORKSPACE_NAME-notebook"
   fi
   LOG_PRINT=${LOG_PRINT:-"/dev/null"}
+  LOG_PRINT="/dev/stdout"
 }
 
 function check_args() {
@@ -232,7 +226,7 @@ function check_args() {
   local sts_exist=$(check_resource_exist sts $NOTEBOOK_NAME $NAMESPACE)
   if [[ "$CLEAN" != "true" && "$sts_exist" == "0" ]]; then
     echo "This  notebook \"$NOTEBOOK_NAME\" is installed, if you want to reinstall notebook, please specify --clean to uninstall"
-    echo "If you want to install notebook for another user, please specify --user <user-name> for user, or specify -n <namespace-name> for different namespace"
+    echo "If you want to install notebook for another user, please specify --notebook-name <notebook-name> for user, or specify -n <namespace-name> for different namespace"
     exit 0
   fi
 }
@@ -288,10 +282,6 @@ function main() {
               NAMESPACE=$2
               shift
               ;;
-          -p|--password)
-              NOTEBOOK_PASSWORD=$2
-              shift
-              ;;
           --ingress)
               INSTALL_INGRESS="true"
               ;;
@@ -303,12 +293,20 @@ function main() {
               INGRESS_SECRET_NAME=$2
               shift
               ;;
+          --notebook-name)
+              NOTEBOOK_WORKSPACE_NAME=$2
+              shift
+              ;;
           -u|--user)
               USER_NAME=$2
               shift
               ;;
           --pvc-name)
               PVC_NAME=$2
+              shift
+              ;;
+          --public-pvc-name)
+              PUBLIC_PVC_NAME=$2
               shift
               ;;
           --notebook-image)

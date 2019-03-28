@@ -14,19 +14,23 @@
 
 ## 开始使用
 
-1.  环境准备
-	* [创建集群](docs/setup/CREATE_CLUSTER.md)
-	* [配置NAS作为共享存储](docs/setup/SETUP_NAS.md)
-	* [安装机器学习基础架构Arena](docs/setup/INSTALL_NOTEBOOK.md)
-	* [配置本地环境](docs/setup/SETUP_LOCAL.md) Deprecated
+* 集群管理员的工作
+	1.  环境准备
+		* [创建集群](docs/setup/CREATE_CLUSTER.md)
+		* [配置NAS作为共享存储](docs/setup/SETUP_NAS.md)
+		* [安装机器学习基础架构Arena](docs/setup/INSTALL_ARENA.md)
+		* [配置用于存放共享数据的存储声明](docs/setup/SETUP_PUBLIC_STORAGE.md)
+	2. 部署Notebook
+		* [配置用户数据的存储声明](docs/setup/SETUP_USER_STORAGE.md)
+		* [部署Notebook](docs/setup/SETUP_NOTEBOOK.md)
 
-2.  入门体验
-	* [如何部署notebook](docs/guide/ACCESS_NOTEBOOK.md)
-	* [如何使用notebook](docs/guide/USE_NOTEBOOK.md)
-
-3.  模型实践
-	* [单机mnist](demo/1-start-with-mnist.ipynb)
-	* [多机mnist](demo/2-distributed-mnist.ipynb)
-	* [MPI分布式训练](demo/3-submit-mpi.ipynb)
-	* [Resnet模型发布](docs/practice/RESNET.md)
-	* [Bert模型](docs/practice/BERT.md)
+* 数据科学家的工作
+	1.  入门体验
+		* [访问Notebook](docs/guide/ACCESS_NOTEBOOK.md)
+		* [使用Notebook](docs/guide/USE_NOTEBOOK.md)
+	2.  模型实践
+		* [单机mnist](demo/1-start-with-mnist.ipynb)
+		* [多机mnist](demo/2-distributed-mnist.ipynb)
+		* [MPI分布式训练](demo8/3-submit-mpi.ipynb)
+		* [Resnet模型发布](docs/practice/RESNET.md)
+		* [Bert模型](docs/practice/BERT.md)

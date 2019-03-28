@@ -2,19 +2,23 @@
 set -e
 
 function print_ingress() {
-	INGRESS_NAME="arena-notebook-ingress"
-	if [[ -n $USER_NAME ]];then
-		INGRESS_NAME="$USER_NAME-arena-notebook-ingress"
-	fi
-	NOTEBOOK_NAME=${NOTEBOOK_NAME:-"arena-notebook"}
-  if [[ -n $USER_NAME ]];then
-    NOTEBOOK_NAME="$USER_NAME-arena-notebook"
+  NOTEBOOK_NAME=${NOTEBOOK_NAME:-"arena-notebook"}
+  if [[ -n $NOTEBOOK_WORKSPACE_NAME ]];then
+    NOTEBOOK_NAME="$NOTEBOOK_WORKSPACE_NAME-notebook"
   fi
+	INGRESS_NAME="arena-notebook-ingress"
+	if [[ -n $NOTEBOOK_NAME ]];then
+		INGRESS_NAME="$NOTEBOOK_NAME-ingress"
+	fi
   INGRESS_NAMESPACE=${INGRESS_NAMESPACE:-"default"}
 	pod_ip=$(kubectl get pod $NOTEBOOK_NAME-0  -n $INGRESS_NAMESPACE -ojsonpath='{.status.podIP}')
-	service_ip=$(kubectl get service $NOTEBOOK_NAME  -n $INGRESS_NAMESPACE -ojsonpath='{.spec.clusterIP}')
 	echo "Notebook pod ip is $pod_ip"
-	echo "Notebook service ip is $service_ip"
+
+	token=$(kubectl logs $NOTEBOOK_NAME-0  -n $INGRESS_NAMESPACE | grep NotebookApp | grep 'token='  | awk -F 'token=' '{print $2}')
+	if [[ $token != "" ]];then
+		echo "Notebook access token is $token"
+	fi
+
 	service_type=$(kubectl get service $NOTEBOOK_NAME  -n $INGRESS_NAMESPACE -ojsonpath='{.spec.type}')
 	if [[ "$service_type" == "NodePort" ]];then
 		node_port=$(kubectl get service -oyaml $NOTEBOOK_NAME  -n $INGRESS_NAMESPACE -ojsonpath='{.spec.ports[0].nodePort}')
@@ -48,8 +52,8 @@ function main() {
 	            INGRESS_NAMESPACE=$2
               shift
 	            ;;
-            -u|--user)
-              USER_NAME=$2
+            --notebook-name)
+              NOTEBOOK_WORKSPACE_NAME=$2
               shift
               ;;
 	        -h|--help)

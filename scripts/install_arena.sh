@@ -5,7 +5,7 @@ function install_arena() {
   check_resource_exist pod arena-installer kube-system
   if [[ "$UPGRADE" != "true" && "$?" == "0" ]]; then
     echo "Arena has been installed."
-    exit(0)
+    exit 0
   fi
 
 	HOST_NETWORK=${HOST_NETWORK:-"true"}
@@ -57,9 +57,6 @@ function main() {
 	    case $1 in
 	        -p|--prometheus)
 	            PROMETHEUS="true"
-	            ;;
-	        --host-network)
-	            HOST_NETWORK="true"
 	            ;;
           --upgrade)
               UPGRADE="true"
