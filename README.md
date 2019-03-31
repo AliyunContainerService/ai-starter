@@ -17,12 +17,11 @@
 * 集群管理员的工作
 	1.  环境准备
 		* [创建集群](docs/setup/CREATE_CLUSTER.md)
-		* [配置NAS作为共享存储](docs/setup/SETUP_NAS.md)
-		* [安装机器学习基础架构Arena](docs/setup/INSTALL_ARENA.md)
-		* [配置用于存放共享数据的存储声明](docs/setup/SETUP_PUBLIC_STORAGE.md)
+		* [安装机器学习基础架构](docs/setup/INSTALL_ARENA.md)
+		* [配置存放公共数据的存储](docs/setup/SETUP_PUBLIC_STORAGE.md)
 	2. 部署Notebook
-		* [配置用户数据的存储声明](docs/setup/SETUP_USER_STORAGE.md)
-		* [部署Notebook](docs/setup/SETUP_NOTEBOOK.md)
+		* [配置存放数据科学家的存储](docs/setup/SETUP_USER_STORAGE.md)
+		* [部署数据科学家工作环境（Notebook）](docs/setup/SETUP_NOTEBOOK.md)
 
 * 数据科学家的工作
 	1.  入门体验

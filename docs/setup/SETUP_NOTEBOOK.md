@@ -1,4 +1,4 @@
-# 如何部署Notebook
+# 部署数据科学家工作环境（Notebook）
 
 ### 前提
 * 请按照 [配置本地环境](../setup/SETUP_LOCAL.md) 这章配置本地环境。
@@ -24,6 +24,13 @@
 ```
 
 3. 部署Notebook
+
+在部署时，您可以为Notebook选择不同的提供服务方式：
+* 通过sshuttle访问： 您需要有一个和集群网络联通的跳板机，数据科学家通过sshuttle，将对Notebook的请求代理到跳板机中，保证数据科学家和Notebook的网络访问联通。部署时无需额外参数配置
+* 通过Ingress访问： 将Notebook通过Ingress的方式提供公网服务能力。部署Notebook时，指定Ingress参数`--ingress`， 以及声明Ingress的域名和TLS证书。
+
+部署命令如下： 
+
 ```
 # foo.bar.com 可以替换为您自己的域名
 # curl -s https://raw.githubusercontent.com/AliyunContainerService/ai-starter/master/scripts/install_notebook.sh | \

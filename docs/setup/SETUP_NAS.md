@@ -16,7 +16,7 @@
 
 1\. 回到容器服务控制台([https://cs.console.aliyun.com/](https://cs.console.aliyun.com/))，我们在容器集群中创建存储卷，将来源设置为NAS。<br />
 
-2\. 在容器控制台中选择 集群 -> 存储卷 -> 创建。 填入上一步中创建的NAS实例的挂载点地址，并设置子目录。 <br />![image.png](images/nas_create_pv.png)
+2\. 在容器控制台中选择 集群 -> 存储卷 -> 创建。 填入上一步中创建的NAS实例的挂载点地址，并设置这个存储声明的子目录和权限。 <br />![image.png](images/nas_create_pv.png)
 
 3\. 创建存储卷完成，继续创建存储声明（PVC），我们设置对应的名称， 并且需要刚刚的存储卷。 <br />![image.png](images/nas_create_pvc.png)
 

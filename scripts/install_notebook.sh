@@ -128,6 +128,11 @@ spec:
       - name: $NOTEBOOK_NAME
         image: $NOTEBOOK_IMAGE
         imagePullPolicy: Always
+        env:
+          - name: PUBLIC_PVC_NAME
+            value: $PUBLIC_PVC_NAME
+          - name: PVC_NAME
+            value: $PVC_NAME
         ports:
         - containerPort: 8888
         volumeMounts:
@@ -139,6 +144,9 @@ spec:
         - name: workspace
           persistentVolumeClaim:
             claimName: $PVC_NAME
+        - name: public-workspace
+          persistentVolumeClaim:
+            claimName: $PUBLIC_PVC_NAME
 EOF
 
 # Define the arena notebook service

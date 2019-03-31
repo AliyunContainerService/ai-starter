@@ -1,5 +1,6 @@
-## 安装机器学习基础架构Arena
-为了简化安装，我们提供了安装脚本。  <br />
+## 安装机器学习基础架构
+Kubernetes支持CRD的方式定义不同类型的工作负载，用于分布式的应用生命周期管理。在深度学习领域比如MPI，ParameterServer模式。  
+在深度学习解决方案中，我们支持了MPI，Tensorflow Parameter Server等模式。 想要在Kubernetes上运行他们，我们需要在集群中部署tj-job,mpi-operator, tf-job-dashboard 等基础服务。 为了简化安装，我们提供了安装脚本。  <br />
 
 ### 执行环境
 由于安装脚本需要和Kubernetes集群交互，我们的环境需要安装好kubectl，并拥有一个创建应用权限的kubernetes用户凭证。 这个阶段通常由集群管理员执行。
@@ -38,7 +39,7 @@ bash -s -- \
 # 查看arena 依赖
 # kubectl -n arena-system get po
 NAME                                      READY   STATUS    RESTARTS   AGE
-mpi-operator-5f89ddc9bf-5mw4c             1/1     Running   0          4d
-tf-job-dashboard-7dc786b7fb-t57wx         1/1     Running   0          4d
-tf-job-operator-v1alpha2-98bfbfc4-9d66t   1/1     Running   0          4d
+mpi-operator-5f89ddc9bf-5mw4c             1/1     Running   0          1m
+tf-job-dashboard-7dc786b7fb-t57wx         1/1     Running   0          1m
+tf-job-operator-v1alpha2-98bfbfc4-9d66t   1/1     Running   0          1m
 ```
