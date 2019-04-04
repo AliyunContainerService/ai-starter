@@ -20,7 +20,7 @@
 	c. 如果用户事先购买的ECS请至少保证系统磁盘为100G以上
 
 
-4\. 完成配置后，点击等待大概20分钟后，集群创建完毕。<br />![image.png](images/create_cluster_finish.png)
+4\. 完成配置后，点击等待大概10-20分钟后，集群创建完毕。<br />![image.png](images/create_cluster_finish.png)
 
 
-5\. 我们可以在集群节点列表查看节点，可以查看到包含GN实例规格的节点，这些节点会被用于被调度和部署GPU应用。<br />![image.png](images/create_cluster_gpu.png)
+5\. 我们可以在集群节点列表查看节点，可以查看到包含GN实例规格的节点，这些节点会被用于被调度和启动GPU应用容器。<br />![image.png](images/create_cluster_gpu.png)

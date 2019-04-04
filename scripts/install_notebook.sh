@@ -129,9 +129,9 @@ spec:
         image: $NOTEBOOK_IMAGE
         imagePullPolicy: Always
         env:
-          - name: PUBLIC_PVC_NAME
+          - name: PUBLIC_DATA_NAME
             value: $PUBLIC_PVC_NAME
-          - name: PVC_NAME
+          - name: USER_DATA_NAME
             value: $PVC_NAME
         ports:
         - containerPort: 8888

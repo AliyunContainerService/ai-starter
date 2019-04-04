@@ -9,7 +9,7 @@
 
 #### 从集群管理员获取Notebook的访问信息
 
-集群管理员部署完工作环境 Notebook后， 会通过脚本获取到 Notebook 的访问地址。打印内容如下：
+集群管理员部署完工作环境 Notebook后， 可以获取到 Notebook 的访问地址。打印内容如下：
 
 ```
 Notebook pod ip is 172.16.1.103
@@ -24,13 +24,13 @@ Ingress of notebook domain is foo.bar.com
 * Ingress IP 和 domain 是为Notebook配置的 Ingress 访问入口。 
 
 您可以通过以下两种方式访问Notebook：
-1. 通过sshuttle访问： 您需要有一个和集群网络联通的跳板机，通过sshuttle设置代理。需要从集群管理员中获得跳板机IP/密码，和Notebook的Pod IP。
-2. 通过Ingress访问： 会将您的Notebook 通过Ingress的公网SLB 提供服务， 仅限域名访问，并且支持Https加密。 保证Notebook在公网的安全性。 需要从集群管理员中获得Ingress IP 和 域名
+1. 通过sshuttle访问： 集群管理员需要提供一个和集群网络联通的跳板机。从集群管理员中获得跳板机IP/密码，和Notebook的Pod IP，通过sshuttle设置代理访问Notebook。
+2. 通过Ingress访问： 集群管理员部署Notebook时会将Notebook 通过Ingress的公网SLB 提供服务， 仅限域名访问，并且支持Https加密。 保证Notebook在公网的安全性。 需要从集群管理员中获得Ingress IP 和 域名
 
 根据您的实际情况和需求，选择合适的访问方式。
 
 #### 通过sshuttle访问Notebook
-1\. sshuttle是一个基于SSH的代理工具，通过它登录到跳板机，可以设置您对某个地址的访问请求的代理。如果您没有安装过sshuttle ，可以通过以下命令安装：
+1\. sshuttle是一个基于SSH的代理工具，通过它登录到跳板机，可以设置您对某个地址和网段的请求的代理。如果您没有安装过sshuttle ，可以通过以下命令安装：
 
 ```
 sudo pip install sshuttle
