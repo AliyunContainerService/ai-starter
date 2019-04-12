@@ -26,7 +26,7 @@
 3. 部署Notebook
 
 在部署时，您可以为Notebook选择不同的提供服务方式：
-* 通过sshuttle访问： 您需要有一个和集群网络联通的跳板机，数据科学家通过sshuttle，将对Notebook的请求代理到跳板机中，保证数据科学家和Notebook的网络访问联通。部署时无需额外参数配置
+* 通过sshuttle访问： 您需要有一个和集群网络联通的跳板机, 如果此跳板机为阿里云上的ECS，需要在此ECS的安全组打开ssh端口(通常为22)，具体配置可以参考[文档](https://www.alibabacloud.com/help/zh/doc-detail/25471.htm).数据科学家通过sshuttle，将对Notebook的请求代理到跳板机中，保证数据科学家和Notebook的网络访问联通。部署时无需额外参数配置
 * 通过Ingress访问： 将Notebook通过Ingress的方式提供公网服务能力。部署Notebook时，指定Ingress参数`--ingress`， 以及声明Ingress的域名和TLS证书。
 
 部署命令如下： 
