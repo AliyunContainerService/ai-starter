@@ -44,8 +44,10 @@ rules:
   resources:
   - services/proxy
   - persistentvolumeclaims
+  - events
   verbs:
   - get
+  - list
 - apiGroups:
   - ""
   resources:
