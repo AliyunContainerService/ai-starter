@@ -2,11 +2,13 @@
 set -e
 
 function install_arena() {
-  check_resource_exist pod arena-installer kube-system
+  check_resource_exist "pod" "arena-installer" "kube-system"
   if [[ "$UPGRADE" != "true" && "$?" == "0" ]]; then
     echo "Arena has been installed."
     exit 0
   fi
+
+  set -e
 
 	HOST_NETWORK=${HOST_NETWORK:-"true"}
 	PROMETHEUS=${PROMETHEUS:-"true"}
@@ -38,6 +40,7 @@ function check_resource_exist() {
   resource_type=$1
   resource_name=$2
   namespace=${3:-"default"}
+  set +e
   kubectl get -n $namespace $resource_type $resource_name &> /dev/null
   return $?
 }
