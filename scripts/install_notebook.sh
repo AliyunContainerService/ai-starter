@@ -140,7 +140,7 @@ spec:
         volumeMounts:
           - mountPath: "$PVC_MOUNT_PATH"
             name: workspace
-          - mountPath: '/root/ai-starter'
+          - mountPath: "$PUBLIC_PVC_MOUNT_PATH"
             name: public-workspace
       volumes:
         - name: workspace
