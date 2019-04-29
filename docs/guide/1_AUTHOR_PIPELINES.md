@@ -67,7 +67,7 @@ spec:
 
 ## 开发Pipeline
 
-由于Kubeflow Pipelines提供的例子都是依赖于Google的存储服务，这导致国内的用户无法真正体验Pipelines的能力。阿里云容器服务团队提供了训练MNIST模型的例子，方便您在阿里云上使用和学习Kubeflow Pipelines。具体步骤为3步: 
+由于Kubeflow Pipelines提供的例子都是依赖于Google的存储服务，这导致国内的用户无法真正体验Pipelines的能力。阿里云容器服务团队提供了训练MNIST模型的例子，方便您在阿里云上使用和学习Kubeflow Pipelines。具体步骤为3步:  
 (1)下载数据   
 (2)利用TensorFlow进行模型训练  
 (3)模型导出
@@ -127,7 +127,7 @@ def sample_pipeline(learning_rate='0.01',
 
 Kubeflow Pipelines会将上面的代码转化成一个有向无环图(DAG),其中的每一个节点就是Component(组件)，而Component(组件)之间的连线代表它们之间的依赖关系。从Pipelines UI可以看到DAG图:
 
-![4-pipeline-dag.jpg](4-pipeline-dag.jpg)
+![](images/pipelines/pipeline-dag.jpg)
 
 首先具体理解一下数据准备的部分，这里我们提供了`arena.standalone_job_op`的Python API, 需要指定该步骤的`名称`:name，`需要使用的容器镜像`:image,`要使用的数据以及其对应到容器内部的挂载目录`:data，这里的data是一个数组格式, 如data=["user-susan:/training"]，表示可以挂载到多个数据。 `user-susan`是之前创建的Persistent Volume Claim，而`/training`为容器内部的挂载目录。
 
