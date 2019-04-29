@@ -105,8 +105,11 @@ subjects:
 - kind: ServiceAccount
   name: $NOTEBOOK_NAME
   namespace: $NAMESPACE
----
-# Define the arena notebook deployment
+EOF
+
+# Deploy notebook statefulSet with public dataSet
+if [[ -n $PUBLIC_PVC_NAME ]];then
+cat <<EOF | kubectl apply -f > $LOG_PRINT -
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -150,6 +153,47 @@ spec:
           persistentVolumeClaim:
             claimName: $PUBLIC_PVC_NAME
 EOF
+else
+cat <<EOF | kubectl apply -f > $LOG_PRINT -
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: $NOTEBOOK_NAME
+  namespace: $NAMESPACE
+  labels:
+    app: $NOTEBOOK_NAME
+    arena-notebook: $NOTEBOOK_NAME
+spec:
+  selector: # define how the deployment finds the pods it mangages
+    matchLabels:
+      app: $NOTEBOOK_NAME
+  serviceName: "$NOTEBOOK_NAME"
+  template:
+    metadata:
+      labels:
+        app: $NOTEBOOK_NAME
+    spec:
+      serviceAccountName: $NOTEBOOK_NAME
+      containers:
+      - name: $NOTEBOOK_NAME
+        image: $NOTEBOOK_IMAGE
+        imagePullPolicy: Always
+        env:
+          - name: PUBLIC_PVC_NAME
+            value: ''
+          - name: PVC_NAME
+            value: $PVC_NAME
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+          - mountPath: "$PVC_MOUNT_PATH"
+            name: workspace
+      volumes:
+        - name: workspace
+          persistentVolumeClaim:
+            claimName: $PVC_NAME
+EOF
+fi
 
 # Define the arena notebook service
   cat <<EOF | kubectl apply -f > $LOG_PRINT -
@@ -198,7 +242,6 @@ EOF
 function parse_args() {
   NAMESPACE=${NAMESPACE:-"default"}
   PVC_NAME=${PVC_NAME:-"training-data"}
-  PUBLIC_PVC_NAME=${PUBLIC_PVC_NAME:-"public-data"}
   PVC_MOUNT_PATH=${PVC_MOUNT_PATH:-"/root"}
   PUBLIC_PVC_MOUNT_PATH=${PUBLIC_PVC_MOUNT_PATH:-"/root/public"}
   SREVICE_TYPE=${SREVICE_TYPE:-"ClusterIP"}

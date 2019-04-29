@@ -18,9 +18,8 @@
 	1.  环境准备
 		* [创建集群](docs/setup/CREATE_CLUSTER.md)
 		* [安装机器学习基础架构](docs/setup/INSTALL_ARENA.md)
-		* [配置存放公共数据的存储](docs/setup/SETUP_PUBLIC_STORAGE.md)
 	2. 部署Notebook
-		* [配置存放数据科学家的存储](docs/setup/SETUP_USER_STORAGE.md)
+		* [配置共享存储](docs/setup/SETUP_USER_STORAGE.md)
 		* [部署数据科学家工作环境（Notebook）](docs/setup/SETUP_NOTEBOOK.md)
 
 * 数据科学家的工作
@@ -31,5 +30,3 @@
 		* [单机mnist](demo/1-start-with-mnist.ipynb)
 		* [多机mnist](demo/2-distributed-mnist.ipynb)
 		* [MPI分布式训练](demo8/3-submit-mpi.ipynb)
-		* [Resnet模型发布](docs/practice/RESNET.md)
-		* [Bert模型](docs/practice/BERT.md)

@@ -37,8 +37,7 @@
 bash -s -- \
 --notebook-name susan \
 --ingress --ingress-domain foo.bar.com --ingress-secret notebook-secret \
---pvc-name susan-data \
---public-pvc-name public-data
+--pvc-name training-data
 ```
 
 上述安装执行中，可以通过以下参数定制部署的依赖组件：
@@ -49,8 +48,8 @@ bash -s -- \
 --ingress           指定是否为Notebook配置Ingress
 --ingress-domain    指定为Notebook配置的Ingress域名，仅在指定--ingress时生效
 --ingress-secret    指定为Notebook配置的Ingress，HTTPS使用的证书Secret，仅在指定--ingress时生效
---pvc-name          指定Notebook用于挂载的存储声明，会将Notebook的/root目录挂载为这个存储声明，默认值为training-data
---public-pvc-name   指定用于挂载共享数据的存储声明，会将Notebook的/root/public 目录挂载为这个存储声明
+--pvc-name          指定Notebook用于挂载的存储声明，将Notebook的/root目录挂载为这个存储声明，默认值为training-data
+--public-pvc-name   指定用于挂载共享数据的存储声明，将Notebook的/root/public 目录挂载为这个存储声明
 --notebook-image    指定Notebook的使用镜像，默认是registry.cn-beijing.aliyuncs.com/acs/arena-notebook:cpu
 --clean             如果指定了--clean参数，会清理之前通过脚本部署的Notebook应用
 ```
