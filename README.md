@@ -21,6 +21,9 @@
 	2. 部署Notebook
 		* [配置共享存储](docs/setup/SETUP_USER_STORAGE.md)
 		* [部署数据科学家工作环境（Notebook）](docs/setup/SETUP_NOTEBOOK.md)
+	3. 部署Kubeflow Pipelines
+		* [安装Kubeflow Pipelines](https://github.com/AliyunContainerService/kubeflow-aliyun/blob/master/README.md)
+
 
 * 数据科学家的工作
 	1.  入门体验
@@ -30,3 +33,5 @@
 		* [单机mnist](demo/1-start-with-mnist.ipynb)
 		* [多机mnist](demo/2-distributed-mnist.ipynb)
 		* [MPI分布式训练](demo8/3-submit-mpi.ipynb)
+	3.  端到端的机器学习工作流
+		* [开发mnist Pipelines](docs/guide/1_AUTHOR_PIPELINES.md)
