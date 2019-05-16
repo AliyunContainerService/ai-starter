@@ -32,6 +32,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: $NOTEBOOK_NAME
+  namespace: $NAMESPACE
 rules:
 - apiGroups:
   - ""
