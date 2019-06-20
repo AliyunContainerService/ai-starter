@@ -21,6 +21,7 @@
 	2. 部署Notebook
 		* [配置共享存储](docs/setup/SETUP_USER_STORAGE.md)
 		* [部署数据科学家工作环境（Notebook）](docs/setup/SETUP_NOTEBOOK.md)
+		* [运维数据科学家工作环境（Notebook）](docs/setup/OPERATE_NOTEBOOK.md)
 	3. 部署Kubeflow Pipelines
 		* [安装Kubeflow Pipelines](https://github.com/AliyunContainerService/kubeflow-aliyun/blob/master/README.md)
 
