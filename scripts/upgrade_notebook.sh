@@ -8,7 +8,7 @@ function log() {
 
 # Print usage
 function usage() {
-  echo "usage: upgrade_notebook.sh -n <namespace> --image <image_name> --name <notbook_name>"
+  echo "usage: upgrade_notebook.sh -n <namespace> --image <image_name> --notebook-name <notbook_name>"
 }
 
 # Upgrade notebook's image

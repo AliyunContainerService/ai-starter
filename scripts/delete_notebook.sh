@@ -8,7 +8,7 @@ function log() {
 
 # Print usage
 function usage() {
-  echo "usage: delete_notebook.sh -n <namespace>  --name <notbook_name>"
+  echo "usage: delete_notebook.sh -n <namespace>  --notebook-name <notbook_name>"
 }
 
 # Upgrade notebook's image
@@ -27,7 +27,7 @@ function delete_notebook() {
   local exist=$(check_resource_exist sts $NOTEBOOK_NAME $NAMESPACE)
   if [[ "$exist" == "0" ]]; then
   	    set -x
-		    kubectl delete -n $NAMESPACE $NOTEBOOK_NAME
+		    kubectl delete -n $NAMESPACE sts $NOTEBOOK_NAME
 	else
 		log "notebook $NOTEBOOK_NAME in namespace $NAMESPACE is not found. Please check"
   fi
