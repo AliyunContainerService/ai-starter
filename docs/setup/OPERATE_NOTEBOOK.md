@@ -11,7 +11,6 @@
 # curl -s https://raw.githubusercontent.com/AliyunContainerService/ai-starter/master/scripts/upgrade_notebook.sh | \
 bash -s -- \
 --notebook-name susan \
---namespace kubeflow \
 --image registry.cn-qingdao.aliyuncs.com/acs/arena-notebook:0.2.0-20190617081324-7af0024-cpu
 ```
 

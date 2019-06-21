@@ -14,14 +14,14 @@ function usage() {
 # Upgrade notebook's image
 function upgrade_notebook() {
   if [[ -z $NAMESPACE ]];then
-    usage
-    exit 1
+    NAMESPACE="default"
   fi
 	
   if [[ -z $NOTEBOOK_NAME ]];then
     usage
     exit 1
   fi
+  NOTEBOOK_NAME=$NOTEBOOK_NAME-notebook-0
 
   if [[ -z $NOTEBOOK_IMAGE ]];then
     usage
@@ -56,7 +56,7 @@ function main() {
 	          NAMESPACE=$2
               shift
 	            ;;
-            -name)
+            --notebook-name)
               NOTEBOOK_NAME=$2
               shift
               ;;
