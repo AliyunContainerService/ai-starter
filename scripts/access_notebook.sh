@@ -17,7 +17,7 @@ function port_forward() {
 	local PORT=${PORT:-8081}
 	local PODNAME=${PODNAME:-"arena-notebook-0"}
     if [[ -n $USER_NAME ]];then
-      PODNAME="$USER_NAME-arena-notebook-0"
+      PODNAME="$USER_NAME-notebook-0"
     fi
 	# local PODNAME=`kubectl get po -n $NAMESPACE -l $LABEL | grep -v NAME| head -1| awk '{print $1}'`
 	echo "Forwarding pod: $NAMESPACE/$PODNAME, port: $PORT"
