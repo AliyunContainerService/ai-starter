@@ -33,7 +33,7 @@ function upgrade_notebook() {
   local exist=$(check_resource_exist sts $NOTEBOOK_NAME $NAMESPACE)
   if [[ "$exist" == "0" ]]; then
   	    set -x
-  	    kubectl patch statefulset -n $NAMESPACE $NOTEBOOK_NAME -p '{"spec":{"updateStrategy":{"type":"rollingUpdate"}}}'
+  	    kubectl patch statefulset -n $NAMESPACE $NOTEBOOK_NAME -p '{"spec":{"updateStrategy":{"type":"RollingUpdate"}}}'
 		kubectl set image statefulset -n $NAMESPACE $NOTEBOOK_NAME $NOTEBOOK_NAME=$NOTEBOOK_IMAGE
 	else
 		log "notebook $NOTEBOOK_NAME in namespace $NAMESPACE is not found. Please check"
