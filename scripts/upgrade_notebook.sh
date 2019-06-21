@@ -21,7 +21,7 @@ function upgrade_notebook() {
     usage
     exit 1
   fi
-  NOTEBOOK_NAME=$NOTEBOOK_NAME-notebook-0
+  NOTEBOOK_NAME=$NOTEBOOK_NAME-notebook
 
   if [[ -z $NOTEBOOK_IMAGE ]];then
     usage

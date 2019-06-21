@@ -21,7 +21,7 @@ function delete_notebook() {
     usage
     exit 1
   fi
-  NOTEBOOK_NAME=$NOTEBOOK_NAME-notebook-0
+  NOTEBOOK_NAME=$NOTEBOOK_NAME-notebook
 
   # if the notebook exists
   local exist=$(check_resource_exist sts $NOTEBOOK_NAME $NAMESPACE)
