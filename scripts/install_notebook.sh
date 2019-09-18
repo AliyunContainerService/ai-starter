@@ -64,6 +64,7 @@ rules:
   resources:
   - deployments
   - replicasets
+  - statefulsets
   verbs:
   - '*'
 - apiGroups:
@@ -384,3 +385,4 @@ function main() {
 }
 
 main "$@"
+
